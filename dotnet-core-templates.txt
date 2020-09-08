@@ -1,7 +1,10 @@
 
-dotnet
-
+dotnet templates system command and arguments
 .NET Core SDK (3.1.401)
+
+
+
+dotnet --help
 Usage: dotnet [runtime-options] [path-to-application] [arguments]
 
 Execute a .NET Core application.
@@ -58,4 +61,146 @@ Additional commands from bundled tools:
 Run 'dotnet [command] --help' for more information on a command.
 
 
+
+
+
+
+dotnet add --help
+Usage: dotnet add [options] <PROJECT> [command]
+
+Arguments:
+  <PROJECT>   The project file to operate on. If a file is not specified, the command will search the current directory for one.
+
+Options:
+  -h, --help   Show command line help.
+
+Commands:
+  package <PACKAGE_NAME>     Add a NuGet package reference to the project.
+  reference <PROJECT_PATH>   Add a project-to-project reference to the project.
+  
+  
+  
+  
+  
+  
+ 
+dotnet build --help
+Usage: dotnet build [options] <PROJECT | SOLUTION>
+
+Arguments:
+  <PROJECT | SOLUTION>   The project or solution file to operate on. If a file is not specified, the command will search the current directory for one.
+
+Options:
+  -h, --help                            Show command line help.
+  -o, --output <OUTPUT_DIR>             The output directory to place built artifacts in.
+  -f, --framework <FRAMEWORK>           The target framework to build for. The target framework must also be specified in the project file.
+  -c, --configuration <CONFIGURATION>   The configuration to use for building the project. The default for most projects is 'Debug'.
+  -r, --runtime <RUNTIME_IDENTIFIER>    The target runtime to build for.
+  --version-suffix <VERSION_SUFFIX>     Set the value of the $(VersionSuffix) property to use when building the project.
+  --no-incremental                      Do not use incremental building.
+  --no-dependencies                     Do not build project-to-project references and only build the specified project.
+  /nologo, --nologo                     Do not display the startup banner or the copyright message.
+  --no-restore                          Do not restore the project before building.
+  --interactive                         Allows the command to stop and wait for user input or action (for example to complete authentication).
+  -v, --verbosity <LEVEL>               Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+  --force                               Force all dependencies to be resolved even if the last restore was successful.
+                                        This is equivalent to deleting project.assets.json.
+
+										
+										
+										
+									
+										
+dotnet build-server  --help
+Usage: dotnet build-server [options] [command]
+
+Options:
+  -h, --help   Show command line help.
+
+Commands:
+  shutdown   Shuts down build servers that are started from dotnet. By default, all servers are shut down.
+  
+  
+
+
+  
+dotnet clean --help
+Usage: dotnet clean [options] <PROJECT | SOLUTION>
+
+Arguments:
+  <PROJECT | SOLUTION>   The project or solution file to operate on. If a file is not specified, the command will search the current directory for one.
+
+Options:
+  -h, --help                            Show command line help.
+  -o, --output <OUTPUT_DIR>             The directory containing the build artifacts to clean.
+  /nologo, --nologo                     Do not display the startup banner or the copyright message.
+  -f, --framework <FRAMEWORK>           The target framework to clean for. The target framework must also be specified in the project file.
+  -r, --runtime <RUNTIME_IDENTIFIER>    The target runtime to clean for.
+  -c, --configuration <CONFIGURATION>   The configuration to clean for. The default for most projects is 'Debug'.
+  --interactive                         Allows the command to stop and wait for user input or action (for example to complete authentication).
+  -v, --verbosity <LEVEL>               Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+
+
+  
+  
+  
+
+  
+dotnet help  --help
+Usage: dotnet help [options] <COMMAND_NAME>
+
+Arguments:
+  <COMMAND_NAME>   The SDK command to launch online help for.
+
+Options:
+  -h, --help   Show command line help.
+
+
+  
+  
+  
+  
+  
+dotnet list  --help
+Usage: dotnet list [options] <PROJECT | SOLUTION> [command]
+
+Arguments:
+  <PROJECT | SOLUTION>   The project or solution file to operate on. If a file is not specified, the command will search the current directory for one.
+
+Options:
+  -h, --help   Show command line help.
+
+Commands:
+  package     List all package references of the project or solution.
+  reference   List all project-to-project references of the project.
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 

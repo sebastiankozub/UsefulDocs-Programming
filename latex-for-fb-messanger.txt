@@ -1,0 +1,122 @@
+Latex formatting for Facebook Messenger
+=======================================
+
+Basic formatting:
+=================
+
+_Test Text_
+
+*Test Tekst*	
+
+~Test Tekst~	
+	
+`Test Tekst`	
+
+```
+Test Tekst
+```	
+
+> Lorem ipsum: Wprowadź trzy odwrócone apostrofy. Wprowadź jeden podział wiersza (wciśnij shift + return). Wpisz tekst Wprowadź kolejny podział wiersza (wciśnij shift + return) Wprowadź kolejne trzy odwrócone apostrofy Wprowadź trzy odwrócone apostrofy. Wprowadź jeden podział wiersza (wciśnij shift + return) Wpisz tekst!!! Wprowadź kolejny podział wiersza (wciśnij shift + return). Wprowadź kolejne trzy odwrócone apostrofy Szablon krojów pisma LaTeX \(Tekst\) Testowe!!!
+
+
+Latex-Compatible Support:
+=========================
+
+\(Tekst\)
+
+\( y = (ax + b)(ax + b)  \)
+
+
+Mathematix syntax:
+==================
+
+For in-line math: 
+-----------------
+
+\( LaTeX Code \) 
+
+$$ E = \frac{mc2}{\sqrt{1-\frac{v2}{c2}}} $$
+
+$$ LaTeX Code $$ 
+ 
+\[ LaTeX Code ]\]
+ 
+ 
+For multi-line math: 
+--------------------
+ 
+$$ F(x) = \begin{cases} f(x), & \text{for } 0 \leq x \leq 1 \\ f(x - 1), & \text{for } x > 1 \\ f(x^2 + 1), & \text{for } x < 0 \end{cases} $$
+ 
+ 
+Matrix:
+-------
+
+$$ \left\lceil\begin{matrix}1 & 2 & 3\\a & b & c\end{matrix}\right\rceil $$
+
+
+Vulgar Fraction:
+----------------
+ 
+$$ \frac{1}{4} $$
+ 
+\[ \left[  \frac{ N } { \left( \frac{L}{p} \right)  - (m+n) }  \right] \]
+ 
+$$ E = \frac{mc^2}{\sqrt{1-\frac{v^2}{c^2}}} $$
+
+$$ E = \frac{DON'T}{FUCK WITH}{XAWERY} $$
+
+$$ E = \frac{mc2}{\sqrt{1-\frac{v2}{c2}}} $$
+
+
+Code Formatting and Mono-Space:
+===============================
+
+in-line code:
+-------------
+
+You can have some mono-space statements: `in-line mono-pace code` in your message. 
+
+multi-line:
+-----------
+
+```csharp
+for (int i = 0 ; i < 10; i++)
+{
+    pierwszFunkcja("Hello Earth!");
+     // Code to execute
+	firstMethodMan(int: integer);
+	secondMethod(bool booleanValue);
+}
+```
+
+```php
+for (int i = 0 ; i < 10; i++)
+{
+    pierwszFunkcja("Hello Earth!");
+	/* Code to execute in block comment commented */
+	firstMethodMan(int: integer);
+	secondMethoda(bool booleanValue);
+}
+```
+
+
+Quotation:
+===========
+
+> Lorem ipsum ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum Lorem Ipsum. 
+
+
+Colors:
+=======
+
+$$\text{
+\color{#f00}{H}\color{#f94}{e}\color{#ff0}{l}\color{#9f4}{l}\color{#2f2}{o} 
+\color{#4f9}{W}\color{#0ff}{o}\color{#04f}{r}\color{#40f}{l}\color{#f0f}{d}
+}$$
+
+$$\text{\color{#f00}{T} \color{#f94}{en} \color{#ff0}{C} \color{#9f4}{Z} \color{#2f2}{o} \color{#f00}{W} \color{#f94}{Y} \color{#ff0}{R} \color{#9f4}{A} \color{#2f2}{J} \color{#f00}{w} \color{#f94}{s} \color{#ff0}{z} \color{#9f4}{y} \color{#2f2}{s} \color{#f00}{T} \color{#f94}{KO} \color{#ff0}{t} \color{#9f4}{EN} \color{#2f2}{c} \color{#f00}{z} \color{#f94}{o} \color{#ff0}{w} \color{#9f4}{e}}$$
+
+
+1. pierwszy
+2. drugi 
+3. trzeci
