@@ -180,6 +180,1192 @@ Commands:
   
   
   
+dotnet msbuild  -h
+Microsoft (R) Build Engine version 16.7.0+b89cb5fde for .NET
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Syntax:              MSBuild.exe [options] [project file | directory]
+
+Description:         Builds the specified targets in the project file. If
+                     a project file is not specified, MSBuild searches the
+                     current working directory for a file that has a file
+                     extension that ends in "proj" and uses that file.  If
+                     a directory is specified, MSBuild searches that
+                     directory for a project file.
+
+Switches:            Note that you can specify switches using both
+                     "-switch" and "/switch".
+
+  -target:<targets>  Build these targets in this project. Use a semicolon or a
+                     comma to separate multiple targets, or specify each
+                     target separately. (Short form: -t)
+                     Example:
+                       -target:Resources;Compile
+
+  -property:<n>=<v>  Set or override these project-level properties. <n> is
+                     the property name, and <v> is the property value. Use a
+                     semicolon or a comma to separate multiple properties, or
+                     specify each property separately. (Short form: -p)
+                     Example:
+                       -property:WarningLevel=2;OutDir=bin\Debug\
+
+  -maxCpuCount[:n]   Specifies the maximum number of concurrent processes to
+                     build with. If the switch is not used, the default
+                     value used is 1. If the switch is used without a value
+                     MSBuild will use up to the number of processors on the
+                     computer. (Short form: -m[:n])
+
+  -toolsVersion:<version>
+                     The version of the MSBuild Toolset (tasks, targets, etc.)
+                     to use during build. This version will override the
+                     versions specified by individual projects. (Short form:
+                     -tv)
+                     Example:
+                       -toolsVersion:3.5
+
+  -verbosity:<level> Display this amount of information in the event log.
+                     The available verbosity levels are: q[uiet], m[inimal],
+                     n[ormal], d[etailed], and diag[nostic]. (Short form: -v)
+                     Example:
+                       -verbosity:quiet
+
+  -consoleLoggerParameters:<parameters>
+                     Parameters to console logger. (Short form: -clp)
+                     The available parameters are:
+                        PerformanceSummary--Show time spent in tasks, targets
+                            and projects.
+                        Summary--Show error and warning summary at the end.
+                        NoSummary--Don't show error and warning summary at the
+                            end.
+                        ErrorsOnly--Show only errors.
+                        WarningsOnly--Show only warnings.
+                        NoItemAndPropertyList--Don't show list of items and
+                            properties at the start of each project build.
+                        ShowCommandLine--Show TaskCommandLineEvent messages
+                        ShowTimestamp--Display the Timestamp as a prefix to any
+                            message.
+                        ShowEventId--Show eventId for started events, finished
+                            events, and messages
+                        ForceNoAlign--Does not align the text to the size of
+                            the console buffer
+                        DisableConsoleColor--Use the default console colors
+                            for all logging messages.
+                        DisableMPLogging-- Disable the multiprocessor
+                            logging style of output when running in
+                            non-multiprocessor mode.
+                        EnableMPLogging--Enable the multiprocessor logging
+                            style even when running in non-multiprocessor
+                            mode. This logging style is on by default.
+                        ForceConsoleColor--Use ANSI console colors even if
+                            console does not support it
+                        Verbosity--overrides the -verbosity setting for this
+                            logger.
+                     Example:
+                        -consoleLoggerParameters:PerformanceSummary;NoSummary;
+                                                 Verbosity=minimal
+
+  -noConsoleLogger   Disable the default console logger and do not log events
+                     to the console. (Short form: -noConLog)
+
+  -fileLogger[n]     Logs the build output to a file. By default
+                     the file is in the current directory and named
+                     "msbuild[n].log". Events from all nodes are combined into
+                     a single log. The location of the file and other
+                     parameters for the fileLogger can be specified through
+                     the addition of the "-fileLoggerParameters[n]" switch.
+                     "n" if present can be a digit from 1-9, allowing up to
+                     10 file loggers to be attached. (Short form: -fl[n])
+
+  -fileLoggerParameters[n]:<parameters>
+                     Provides any extra parameters for file loggers.
+                     The presence of this switch implies the
+                     corresponding -fileLogger[n] switch.
+                     "n" if present can be a digit from 1-9.
+                     -fileLoggerParameters is also used by any distributed
+                     file logger, see description of -distributedFileLogger.
+                     (Short form: -flp[n])
+                     The same parameters listed for the console logger are
+                     available. Some additional available parameters are:
+                        LogFile--path to the log file into which the
+                            build log will be written.
+                        Append--determines if the build log will be appended
+                            to or overwrite the log file. Setting the
+                            switch appends the build log to the log file;
+                            Not setting the switch overwrites the
+                            contents of an existing log file.
+                            The default is not to append to the log file.
+                        Encoding--specifies the encoding for the file,
+                            for example, UTF-8, Unicode, or ASCII
+                     Default verbosity is Detailed.
+                     Examples:
+                       -fileLoggerParameters:LogFile=MyLog.log;Append;
+                                           Verbosity=diagnostic;Encoding=UTF-8
+
+                       -flp:Summary;Verbosity=minimal;LogFile=msbuild.sum
+                       -flp1:warningsonly;logfile=msbuild.wrn
+                       -flp2:errorsonly;logfile=msbuild.err
+
+  -distributedLogger:<central logger>*<forwarding logger>
+                     Use this logger to log events from MSBuild, attaching a
+                     different logger instance to each node. To specify
+                     multiple loggers, specify each logger separately.
+                     (Short form -dl)
+                     The <logger> syntax is:
+                       [<class>,]<assembly>[,<options>][;<parameters>]
+                     The <logger class> syntax is:
+                       [<partial or full namespace>.]<logger class name>
+                     The <logger assembly> syntax is:
+                       {<assembly name>[,<strong name>] | <assembly file>}
+                     Logger options specify how MSBuild creates the logger.
+                     The <logger parameters> are optional, and are passed
+                     to the logger exactly as you typed them. (Short form: -l)
+                     Examples:
+                       -dl:XMLLogger,MyLogger,Version=1.0.2,Culture=neutral
+                       -dl:MyLogger,C:\My.dll*ForwardingLogger,C:\Logger.dll
+
+  -distributedFileLogger
+                     Logs the build output to multiple log files, one log file
+                     per MSBuild node. The initial location for these files is
+                     the current directory. By default the files are called
+                     "MSBuild<nodeid>.log". The location of the files and
+                     other parameters for the fileLogger can be specified
+                     with the addition of the "-fileLoggerParameters" switch.
+
+                     If a log file name is set through the fileLoggerParameters
+                     switch the distributed logger will use the fileName as a
+                     template and append the node id to this fileName to
+                     create a log file for each node.
+
+  -logger:<logger>   Use this logger to log events from MSBuild. To specify
+                     multiple loggers, specify each logger separately.
+                     The <logger> syntax is:
+                       [<class>,]<assembly>[,<options>][;<parameters>]
+                     The <logger class> syntax is:
+                       [<partial or full namespace>.]<logger class name>
+                     The <logger assembly> syntax is:
+                       {<assembly name>[,<strong name>] | <assembly file>}
+                     Logger options specify how MSBuild creates the logger.
+                     The <logger parameters> are optional, and are passed
+                     to the logger exactly as you typed them. (Short form: -l)
+                     Examples:
+                       -logger:XMLLogger,MyLogger,Version=1.0.2,Culture=neutral
+                       -logger:XMLLogger,C:\Loggers\MyLogger.dll;OutputAsHTML
+
+  -binaryLogger[:[LogFile=]output.binlog[;ProjectImports={None,Embed,ZipFile}]]
+                     Serializes all build events to a compressed binary file.
+                     By default the file is in the current directory and named
+                     "msbuild.binlog". The binary log is a detailed description
+                     of the build process that can later be used to reconstruct
+                     text logs and used by other analysis tools. A binary log
+                     is usually 10-20x smaller than the most detailed text
+                     diagnostic-level log, but it contains more information.
+                     (Short form: -bl)
+
+                     The binary logger by default collects the source text of
+                     project files, including all imported projects and target
+                     files encountered during the build. The optional
+                     ProjectImports switch controls this behavior:
+
+                      ProjectImports=None     - Don't collect the project
+                                                imports.
+                      ProjectImports=Embed    - Embed project imports in the
+                                                log file.
+                      ProjectImports=ZipFile  - Save project files to
+                                                output.projectimports.zip
+                                                where output is the same name
+                                                as the binary log file name.
+
+                     The default setting for ProjectImports is Embed.
+                     Note: the logger does not collect non-MSBuild source files
+                     such as .cs, .cpp etc.
+
+                     A .binlog file can be "played back" by passing it to
+                     msbuild.exe as an argument instead of a project/solution.
+                     Other loggers will receive the information contained
+                     in the log file as if the original build was happening.
+                     You can read more about the binary log and its usages at:
+                     https://github.com/Microsoft/msbuild/wiki/Binary-Log
+
+                     Examples:
+                       -bl
+                       -bl:output.binlog
+                       -bl:output.binlog;ProjectImports=None
+                       -bl:output.binlog;ProjectImports=ZipFile
+                       -bl:..\..\custom.binlog
+                       -binaryLogger
+
+  -warnAsError[:code[;code2]]
+                     List of warning codes to treats as errors.  Use a semicolon
+                     or a comma to separate multiple warning codes. To treat all
+                     warnings as errors use the switch with no values.
+                     (Short form: -err[:c;[c2]])
+
+                     Example:
+                       -warnAsError:MSB4130
+
+                     When a warning is treated as an error the target will
+                     continue to execute as if it was a warning but the overall
+                     build will fail.
+
+  -warnAsMessage[:code[;code2]]
+                     List of warning codes to treats as low importance
+                     messages.  Use a semicolon or a comma to separate
+                     multiple warning codes.
+                     (Short form: -noWarn[:c;[c2]])
+
+                     Example:
+                       -warnAsMessage:MSB3026
+
+  -ignoreProjectExtensions:<extensions>
+                     List of extensions to ignore when determining which
+                     project file to build. Use a semicolon or a comma
+                     to separate multiple extensions.
+                     (Short form: -ignore)
+                     Example:
+                       -ignoreProjectExtensions:.sln
+
+  -nodeReuse:<parameters>
+                     Enables or Disables the reuse of MSBuild nodes.
+                     The parameters are:
+                     True --Nodes will remain after the build completes
+                            and will be reused by subsequent builds (default)
+                     False--Nodes will not remain after the build completes
+                     (Short form: -nr)
+                     Example:
+                       -nr:true
+
+  -preprocess[:file]
+                     Creates a single, aggregated project file by
+                     inlining all the files that would be imported during a
+                     build, with their boundaries marked. This can be
+                     useful for figuring out what files are being imported
+                     and from where, and what they will contribute to
+                     the build. By default the output is written to
+                     the console window. If the path to an output file
+                     is provided that will be used instead.
+                     (Short form: -pp)
+                     Example:
+                       -pp:out.txt
+
+  -targets[:file]
+                     Prints a list of available targets without executing the
+                     actual build process. By default the output is written to
+                     the console window. If the path to an output file
+                     is provided that will be used instead.
+                     (Short form: -ts)
+                     Example:
+                       -ts:out.txt
+
+  -detailedSummary
+                     Shows detailed information at the end of the build
+                     about the configurations built and how they were
+                     scheduled to nodes.
+                     (Short form: -ds)
+
+  -restore[:True|False]
+                     Runs a target named Restore prior to building
+                     other targets and ensures the build for these
+                     targets uses the latest restored build logic.
+                     This is useful when your project tree requires
+                     packages to be restored before it can be built.
+                     Specifying -restore is the same as specifying
+                     -restore:True. Use the parameter to override
+                     a value that comes from a response file.
+                     (Short form: -r)
+
+  -restoreProperty:<n>=<v>
+                     Set or override these project-level properties only
+                     during restore and do not use properties specified
+                     with the -property argument. <n> is the property
+                     name, and <v> is the property value. Use a
+                     semicolon or a comma to separate multiple properties,
+                     or specify each property separately.
+                     (Short form: -rp)
+                     Example:
+                       -restoreProperty:IsRestore=true;MyProperty=value
+
+  -profileEvaluation:<file>
+                     Profiles MSBuild evaluation and writes the result
+                     to the specified file. If the extension of the specified
+                     file is '.md', the result is generated in markdown
+                     format. Otherwise, a tab separated file is produced.
+
+  -interactive[:True|False]
+                     Indicates that actions in the build are allowed to
+                     interact with the user.  Do not use this argument
+                     in an automated scenario where interactivity is
+                     not expected.
+                     Specifying -interactive is the same as specifying
+                     -interactive:true.  Use the parameter to override a
+                     value that comes from a response file.
+
+  -isolateProjects[:True|False]
+                     Causes MSBuild to build each project in isolation.
+
+                     This is a more restrictive mode of MSBuild as it requires
+                     that the project graph be statically discoverable at
+                     evaluation time, but can improve scheduling and reduce
+                     memory overhead when building a large set of projects.
+                     (Short form: -isolate)
+
+                     This flag is experimental and may not work as intended.
+
+  -inputResultsCaches:<cacheFile>...
+                     Semicolon separated list of input cache files that MSBuild
+                     will read build results from.
+                     Setting this also turns on isolated builds (-isolate).
+                     (short form: -irc)
+
+  -outputResultsCache:[cacheFile]
+                     Output cache file where MSBuild will write the contents of
+                     its build result caches at the end of the build.
+                     Setting this also turns on isolated builds (-isolate).
+                     (short form: -orc)
+
+  -graphBuild[:True|False]
+                     Causes MSBuild to construct and build a project graph.
+
+                     Constructing a graph involves identifying project
+                     references to form dependencies. Building that graph
+                     involves attempting to build project references prior
+                     to the projects that reference them, differing from
+                     traditional MSBuild scheduling.
+                     (Short form: -graph)
+
+                     This flag is experimental and may not work as intended.
+
+  -lowPriority[:True|False]
+                     Causes MSBuild to run at low process priority.
+
+                     Specifying -lowPriority is the same as specifying
+                     -lowPriority:True.
+                     (Short form: -low)
+
+  @<file>            Insert command-line settings from a text file. To specify
+                     multiple response files, specify each response file
+                     separately.
+
+                     Any response files named "msbuild.rsp" are automatically
+                     consumed from the following locations:
+                     (1) the directory of msbuild.exe
+                     (2) the directory of the first project or solution built
+
+  -noAutoResponse    Do not auto-include any MSBuild.rsp files. (Short form:
+                     -noAutoRsp)
+
+  -noLogo            Do not display the startup banner and copyright message.
+
+  -version           Display version information only. (Short form: -ver)
+
+  -help              Display this usage message. (Short form: -? or -h)
+
+Examples:
+
+        MSBuild MyApp.sln -t:Rebuild -p:Configuration=Release
+        MSBuild MyApp.csproj -t:Clean
+                             -p:Configuration=Debug;TargetFrameworkVersion=v3.5
+
+For more detailed information, see https://aka.ms/msbuild/docs
+
+
+
+
+
+
+
+
+
+
+dotnet new -h
+Usage: new [options]
+
+Options:
+  -h, --help          Displays help for this command.
+  -l, --list          Lists templates containing the specified name. If no name is specified, lists all templates.
+  -n, --name          The name for the output being created. If no name is specified, the name of the current directory is used.
+  -o, --output        Location to place the generated output.
+  -i, --install       Installs a source or a template pack.
+  -u, --uninstall     Uninstalls a source or a template pack.
+  --nuget-source      Specifies a NuGet source to use during install.
+  --type              Filters templates based on available types. Predefined values are "project", "item" or "other".
+  --dry-run           Displays a summary of what would happen if the given command line were run if it would result in a template creation.
+  --force             Forces content to be generated even if it would change existing files.
+  -lang, --language   Filters templates based on language and specifies the language of the template to create.
+  --update-check      Check the currently installed template packs for updates.
+  --update-apply      Check the currently installed template packs for update, and install the updates.
+
+
+Templates                                         Short Name               Language          Tags
+----------------------------------------------------------------------------------------------------------------------------------
+Console Application                               console                  [C#], F#, VB      Common/Console
+Class library                                     classlib                 [C#], F#, VB      Common/Library
+WPF Application                                   wpf                      [C#]              Common/WPF
+WPF Class library                                 wpflib                   [C#]              Common/WPF
+WPF Custom Control Library                        wpfcustomcontrollib      [C#]              Common/WPF
+WPF User Control Library                          wpfusercontrollib        [C#]              Common/WPF
+Windows Forms (WinForms) Application              winforms                 [C#]              Common/WinForms
+Windows Forms (WinForms) Class library            winformslib              [C#]              Common/WinForms
+Worker Service                                    worker                   [C#]              Common/Worker/Web
+Unit Test Project                                 mstest                   [C#], F#, VB      Test/MSTest
+NUnit 3 Test Project                              nunit                    [C#], F#, VB      Test/NUnit
+NUnit 3 Test Item                                 nunit-test               [C#], F#, VB      Test/NUnit
+xUnit Test Project                                xunit                    [C#], F#, VB      Test/xUnit
+Razor Component                                   razorcomponent           [C#]              Web/ASP.NET
+Razor Page                                        page                     [C#]              Web/ASP.NET
+MVC ViewImports                                   viewimports              [C#]              Web/ASP.NET
+MVC ViewStart                                     viewstart                [C#]              Web/ASP.NET
+Blazor Server App                                 blazorserver             [C#]              Web/Blazor
+Blazor WebAssembly App                            blazorwasm               [C#]              Web/Blazor/WebAssembly
+ASP.NET Core Empty                                web                      [C#], F#          Web/Empty
+ASP.NET Core Web App (Model-View-Controller)      mvc                      [C#], F#          Web/MVC
+ASP.NET Core Web App                              webapp                   [C#]              Web/MVC/Razor Pages
+ASP.NET Core with Angular                         angular                  [C#]              Web/MVC/SPA
+ASP.NET Core with React.js                        react                    [C#]              Web/MVC/SPA
+ASP.NET Core with React.js and Redux              reactredux               [C#]              Web/MVC/SPA
+Razor Class Library                               razorclasslib            [C#]              Web/Razor/Library/Razor Class Library
+ASP.NET Core Web API                              webapi                   [C#], F#          Web/WebAPI
+ASP.NET Core gRPC Service                         grpc                     [C#]              Web/gRPC
+dotnet gitignore file                             gitignore                                  Config
+global.json file                                  globaljson                                 Config
+NuGet Config                                      nugetconfig                                Config
+Dotnet local tool manifest file                   tool-manifest                              Config
+Web Config                                        webconfig                                  Config
+Solution File                                     sln                                        Solution
+Protocol Buffer File                              proto                                      Web/gRPC
+
+Examples:
+    dotnet new mvc --auth Individual
+    dotnet new mstest
+    dotnet new --help
+
+
+	
+	
+	
+	
+	
+	
+	
+dotnet nuget -h
+NuGet Command Line 5.7.0.7
+
+Usage: dotnet nuget [options] [command]
+
+Options:
+  -h|--help  Show help information
+  --version  Show version information
+
+Commands:
+  add      Add a NuGet source.
+  delete   Deletes a package from the server.
+  disable  Disable a NuGet source.
+  enable   Enable a NuGet source.
+  list     List configured NuGet sources.
+  locals   Clears or lists local NuGet resources such as http requests cache, packages folder, plugin operations cache  or machine-wide global packages folder.
+  push     Pushes a package to the server and publishes it.
+  remove   Remove a NuGet source.
+  update   Update a NuGet source.
+
+Use "dotnet nuget [command] --help" for more information about a command.
+
+D:\source\repos\WebApplication2019>
+
+
+
+  
+  
+  
+  
+D:\source\repos\WebApplication2019>dotnet pack -h
+Usage: dotnet pack [options] <PROJECT | SOLUTION>
+
+Arguments:
+  <PROJECT | SOLUTION>   The project or solution file to operate on. If a file is not specified, the command will search the current directory for one.
+
+Options:
+  -h, --help                            Show command line help.
+  -o, --output <OUTPUT_DIR>             The output directory to place built packages in.
+  --no-build                            Do not build the project before packing. Implies --no-restore.
+  --include-symbols                     Include packages with symbols in addition to regular packages in output directory.
+  --include-source                      Include PDBs and source files. Source files go into the 'src' folder in the resulting nuget package.
+  -c, --configuration <CONFIGURATION>   The configuration to use for building the package. The default for most projects is 'Debug'.
+  --version-suffix <VERSION_SUFFIX>     Set the value of the $(VersionSuffix) property to use when building the project.
+  -s, --serviceable                     Set the serviceable flag in the package. See https://aka.ms/nupkgservicing for more information.
+  /nologo, --nologo                     Do not display the startup banner or the copyright message.
+  --interactive                         Allows the command to stop and wait for user input or action (for example to complete authentication).
+  --no-restore                          Do not restore the project before building.
+  -v, --verbosity <LEVEL>               Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+  --runtime <RUNTIME_IDENTIFIER>        The target runtime to restore packages for.
+  --no-dependencies                     Do not restore project-to-project references and only restore the specified project.
+  --force                               Force all dependencies to be resolved even if the last restore was successful.
+                                        This is equivalent to deleting project.assets.json.
+
+D:\source\repos\WebApplication2019>dotnet publish  -h
+Usage: dotnet publish [options] <PROJECT | SOLUTION>
+
+Arguments:
+  <PROJECT | SOLUTION>   The project or solution file to operate on. If a file is not specified, the command will search the current directory for one.
+
+Options:
+  -h, --help                            Show command line help.
+  -o, --output <OUTPUT_DIR>             The output directory to place the published artifacts in.
+  -f, --framework <FRAMEWORK>           The target framework to publish for. The target framework has to be specified in the project file.
+  -r, --runtime <RUNTIME_IDENTIFIER>    The target runtime to publish for. This is used when creating a self-contained deployment.
+                                        The default is to publish a framework-dependent application.
+  -c, --configuration <CONFIGURATION>   The configuration to publish for. The default for most projects is 'Debug'.
+  --version-suffix <VERSION_SUFFIX>     Set the value of the $(VersionSuffix) property to use when building the project.
+  --manifest <MANIFEST>                 The path to a target manifest file that contains the list of packages to be excluded from the publish step.
+  --no-build                            Do not build the project before publishing. Implies --no-restore.
+  --self-contained                      Publish the .NET Core runtime with your application so the runtime doesn't need to be installed on the target machine.
+                                        The default is 'true' if a runtime identifier is specified.
+  --no-self-contained                   Publish your application as a framework dependent application without the .NET Core runtime. A supported .NET Core runtime must be installed to run your application.
+  /nologo, --nologo                     Do not display the startup banner or the copyright message.
+  --interactive                         Allows the command to stop and wait for user input or action (for example to complete authentication).
+  --no-restore                          Do not restore the project before building.
+  -v, --verbosity <LEVEL>               Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+  --no-dependencies                     Do not restore project-to-project references and only restore the specified project.
+  --force                               Force all dependencies to be resolved even if the last restore was successful.
+                                        This is equivalent to deleting project.assets.json.
+
+
+
+
+
+
+
+
+
+dotnet pack -h
+Usage: dotnet pack [options] <PROJECT | SOLUTION>
+
+Arguments:
+  <PROJECT | SOLUTION>   The project or solution file to operate on. If a file is not specified, the command will search the current directory for one.
+
+Options:
+  -h, --help                            Show command line help.
+  -o, --output <OUTPUT_DIR>             The output directory to place built packages in.
+  --no-build                            Do not build the project before packing. Implies --no-restore.
+  --include-symbols                     Include packages with symbols in addition to regular packages in output directory.
+  --include-source                      Include PDBs and source files. Source files go into the 'src' folder in the resulting nuget package.
+  -c, --configuration <CONFIGURATION>   The configuration to use for building the package. The default for most projects is 'Debug'.
+  --version-suffix <VERSION_SUFFIX>     Set the value of the $(VersionSuffix) property to use when building the project.
+  -s, --serviceable                     Set the serviceable flag in the package. See https://aka.ms/nupkgservicing for more information.
+  /nologo, --nologo                     Do not display the startup banner or the copyright message.
+  --interactive                         Allows the command to stop and wait for user input or action (for example to complete authentication).
+  --no-restore                          Do not restore the project before building.
+  -v, --verbosity <LEVEL>               Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+  --runtime <RUNTIME_IDENTIFIER>        The target runtime to restore packages for.
+  --no-dependencies                     Do not restore project-to-project references and only restore the specified project.
+  --force                               Force all dependencies to be resolved even if the last restore was successful.
+                                        This is equivalent to deleting project.assets.json.
+
+
+
+
+
+
+
+
+
+dotnet publish  -h
+Usage: dotnet publish [options] <PROJECT | SOLUTION>
+
+Arguments:
+  <PROJECT | SOLUTION>   The project or solution file to operate on. If a file is not specified, the command will search the current directory for one.
+
+Options:
+  -h, --help                            Show command line help.
+  -o, --output <OUTPUT_DIR>             The output directory to place the published artifacts in.
+  -f, --framework <FRAMEWORK>           The target framework to publish for. The target framework has to be specified in the project file.
+  -r, --runtime <RUNTIME_IDENTIFIER>    The target runtime to publish for. This is used when creating a self-contained deployment.
+                                        The default is to publish a framework-dependent application.
+  -c, --configuration <CONFIGURATION>   The configuration to publish for. The default for most projects is 'Debug'.
+  --version-suffix <VERSION_SUFFIX>     Set the value of the $(VersionSuffix) property to use when building the project.
+  --manifest <MANIFEST>                 The path to a target manifest file that contains the list of packages to be excluded from the publish step.
+  --no-build                            Do not build the project before publishing. Implies --no-restore.
+  --self-contained                      Publish the .NET Core runtime with your application so the runtime doesn't need to be installed on the target machine.
+                                        The default is 'true' if a runtime identifier is specified.
+  --no-self-contained                   Publish your application as a framework dependent application without the .NET Core runtime. A supported .NET Core runtime must be installed to run your application.
+  /nologo, --nologo                     Do not display the startup banner or the copyright message.
+  --interactive                         Allows the command to stop and wait for user input or action (for example to complete authentication).
+  --no-restore                          Do not restore the project before building.
+  -v, --verbosity <LEVEL>               Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+  --no-dependencies                     Do not restore project-to-project references and only restore the specified project.
+  --force                               Force all dependencies to be resolved even if the last restore was successful.
+                                        This is equivalent to deleting project.assets.json.
+
+
+
+
+
+
+
+
+
+dotnet remove  -h
+Usage: dotnet remove [options] <PROJECT> [command]
+
+Arguments:
+  <PROJECT>   The project file to operate on. If a file is not specified, the command will search the current directory for one.
+
+Options:
+  -h, --help   Show command line help.
+
+Commands:
+  package <PACKAGE_NAME>     Remove a NuGet package reference from the project.
+  reference <PROJECT_PATH>   Remove a project-to-project reference from the project.
+
+
+  
+  
+  
+  
+  
+  
+  
+dotnet restore  -h
+Usage: dotnet restore [options] <PROJECT | SOLUTION>
+
+Arguments:
+  <PROJECT | SOLUTION>   The project or solution file to operate on. If a file is not specified, the command will search the current directory for one.
+
+Options:
+  -h, --help                           Show command line help.
+  -s, --source <SOURCE>                The NuGet package source to use for the restore.
+  -r, --runtime <RUNTIME_IDENTIFIER>   The target runtime to restore packages for.
+  --packages <PACKAGES_DIR>            The directory to restore packages to.
+  --disable-parallel                   Prevent restoring multiple projects in parallel.
+  --configfile <FILE>                  The NuGet configuration file to use.
+  --no-cache                           Do not cache packages and http requests.
+  --ignore-failed-sources              Treat package source failures as warnings.
+  --no-dependencies                    Do not restore project-to-project references and only restore the specified project.
+  -f, --force                          Force all dependencies to be resolved even if the last restore was successful.
+                                       This is equivalent to deleting project.assets.json.
+  -v, --verbosity <LEVEL>              Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+  --interactive                        Allows the command to stop and wait for user input or action (for example to complete authentication).
+  --use-lock-file                      Enables project lock file to be generated and used with restore.
+  --locked-mode                        Don't allow updating project lock file.
+  --lock-file-path <LOCK_FILE_PATH>    Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.
+  --force-evaluate                     Forces restore to reevaluate all dependencies even if a lock file already exists.
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ dotnet run  -h
+Usage: dotnet run [options] [[--] <additional arguments>...]]
+
+Options:
+  -h, --help                            Show command line help.
+  -c, --configuration <CONFIGURATION>   The configuration to run for. The default for most projects is 'Debug'.
+  -f, --framework <FRAMEWORK>           The target framework to run for. The target framework must also be specified in the project file.
+  -r, --runtime <RUNTIME_IDENTIFIER>    The target runtime to run for.
+  -p, --project                         The path to the project file to run (defaults to the current directory if there is only one project).
+  --launch-profile                      The name of the launch profile (if any) to use when launching the application.
+  --no-launch-profile                   Do not attempt to use launchSettings.json to configure the application.
+  --no-build                            Do not build the project before running. Implies --no-restore.
+  --interactive                         Allows the command to stop and wait for user input or action (for example to complete authentication).
+  --no-restore                          Do not restore the project before building.
+  -v, --verbosity <LEVEL>               Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+  --no-dependencies                     Do not restore project-to-project references and only restore the specified project.
+  --force                               Force all dependencies to be resolved even if the last restore was successful.
+                                        This is equivalent to deleting project.assets.json.
+Additional Arguments:
+  Arguments passed to the application that is being run.
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+dotnet sln  -h
+Usage: dotnet sln [options] <SLN_FILE> [command]
+
+Arguments:
+  <SLN_FILE>   The solution file to operate on. If not specified, the command will search the current directory for one.
+
+Options:
+  -h, --help   Show command line help.
+
+Commands:
+  add <PROJECT_PATH>      Add one or more projects to a solution file.
+  list                    List all projects in a solution file.
+  remove <PROJECT_PATH>   Remove one or more projects from a solution file.
+
+
+  
+  
+  
+  
+  
+  
+  
+dotnet store   -h
+Usage: dotnet store [options]
+
+Options:
+  -h, --help                                Show command line help.
+  -m, --manifest <PROJECT_MANIFEST>         The XML file that contains the list of packages to be stored.
+  -f, --framework <FRAMEWORK>               The target framework to store packages for. The target framework has to be specified in the project file.
+  --framework-version <FRAMEWORK_VERSION>   The Microsoft.NETCore.App package version that will be used to run the assemblies.
+  -r, --runtime <RUNTIME_IDENTIFIER>        The target runtime to store packages for.
+  -o, --output <OUTPUT_DIR>                 The output directory to store the given assemblies in.
+  -w, --working-dir <WORKING_DIR>           The working directory used by the command to execute.
+  --skip-optimization                       Skip the optimization phase.
+  --skip-symbols                            Skip creating symbol files which can be used for profiling the optimized assemblies.
+  -v, --verbosity <LEVEL>                   Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+dotnet test -h
+Usage: dotnet test [options] <PROJECT | SOLUTION> [[--] <RunSettings arguments>...]]
+
+Arguments:
+  <PROJECT | SOLUTION>   The project or solution file to operate on. If a file is not specified, the command will search the current directory for one.
+
+Options:
+  -h, --help                               Show command line help.
+  -s, --settings <SETTINGS_FILE>           The settings file to use when running tests.
+  -t, --list-tests                         List the discovered tests instead of running the tests.
+  --filter <EXPRESSION>                    Run tests that match the given expression.
+                                           Examples:
+                                           Run tests with priority set to 1: --filter "Priority = 1"
+                                           Run a test with the specified full name: --filter "FullyQualifiedName=Namespace.ClassName.MethodName"
+                                           Run tests that contain the specified name: --filter "FullyQualifiedName~Namespace.Class"
+                                           See https://aka.ms/vstest-filtering for more information on filtering support.
+
+  -a, --test-adapter-path <ADAPTER_PATH>   The path to the custom adapters to use for the test run.
+  -l, --logger <LOGGER>                    The logger to use for test results.
+                                           Examples:
+                                           Log in trx format using a unique file name: --logger trx
+                                           Log in trx format using the specified file name: --logger "trx;LogFileName=<TestResults.trx>"
+                                           See https://aka.ms/vstest-report for more information on logger arguments.
+  -c, --configuration <CONFIGURATION>      The configuration to use for running tests. The default for most projects is 'Debug'.
+  -f, --framework <FRAMEWORK>              The target framework to run tests for. The target framework must also be specified in the project file.
+  --runtime <RUNTIME_IDENTIFIER>           The target runtime to test for.
+  -o, --output <OUTPUT_DIR>                The output directory to place built artifacts in.
+  -d, --diag <LOG_FILE>                    Enable verbose logging to the specified file.
+  --no-build                               Do not build the project before testing. Implies --no-restore.
+  -r, --results-directory <RESULTS_DIR>    The directory where the test results will be placed.
+                                           The specified directory will be created if it does not exist.
+  --collect <DATA_COLLECTOR_NAME>          The friendly name of the data collector to use for the test run.
+                                           More info here: https://aka.ms/vstest-collect
+  --blame                                  Run the tests in blame mode. This option is helpful in isolating a problematic test causing the test host to crash.
+                                           Outputs a 'Sequence.xml' file in the current directory that captures the order of execution of test before the crash.
+  /nologo, --nologo                        Run test(s), without displaying Microsoft Testplatform banner
+  --no-restore                             Do not restore the project before building.
+  --interactive                            Allows the command to stop and wait for user input or action (for example to complete authentication).
+  -v, --verbosity <LEVEL>                  Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+
+
+RunSettings arguments:
+  Arguments to pass as RunSettings configurations. Arguments are specified as '[name]=[value]' pairs after "-- " (note the space after --).
+  Use a space to separate multiple '[name]=[value]' pairs.
+  See https://aka.ms/vstest-runsettings-arguments for more information on RunSettings arguments.
+  Example: dotnet test -- MSTest.DeploymentEnabled=false MSTest.MapInconclusiveToFailed=True
+
+  
+  
+  
+  
+  
+  
+dotnet tool  -h
+Usage: dotnet tool [options] [command]
+
+Options:
+  -h, --help   Show command line help.
+
+Commands:
+  install <PACKAGE_ID>     Install global or local tool. Local tools are added to manifest and restored.
+  uninstall <PACKAGE_ID>   Uninstall a global tool or local tool.
+  update <PACKAGE_ID>      Update a global tool.
+  list                     List tools installed globally or locally.
+  run <COMMAND_NAME>       Run local tool.
+  restore                  Restore tools defined in the local tool manifest.
+
+
+  
+  
+  
+  
+  
+  
+  
+
+dotnet vstest /help
+Microsoft (R) Test Execution Command Line Tool Version 16.7.0
+Copyright (c) Microsoft Corporation.  All rights reserved.
+
+Usage: vstest.console.exe [Arguments] [Options] [[--] <RunSettings arguments>...]]
+
+Description: Runs tests from the specified files.
+
+Arguments:
+
+[TestFileNames]
+      Run tests from the specified files or wild card pattern. Separate multiple test file names or pattern
+      by spaces. Set console logger verbosity to detailed to view matched test files.
+      Examples: mytestproject.dll
+                mytestproject.dll myothertestproject.exe
+                testproject*.dll my*project.dll
+
+Options:
+
+--Tests|/Tests:<Test Names>
+      Run tests with names that match the provided values. To provide multiple
+      values, separate them by commas.
+      Examples: /Tests:TestMethod1
+                /Tests:TestMethod1,testMethod2
+
+--TestCaseFilter|/TestCaseFilter:<Expression>
+      Run tests that match the given expression.
+      <Expression> is of the format <property>Operator<value>[|&<Expression>]
+         where Operator is one of =, != or ~  (Operator ~ has 'contains'
+         semantics and is applicable for string properties like DisplayName).
+         Parenthesis () can be used to group sub-expressions.
+      Examples: /TestCaseFilter:"Priority=1"
+                /TestCaseFilter:"(FullyQualifiedName~Nightly
+                                  |Name=MyTestMethod)"
+
+--Framework|/Framework:<Framework Version>
+      Target .Net Framework version to be used for test execution.
+      Valid values are ".NETFramework,Version=v4.5.1", ".NETCoreApp,Version=v1.0" etc.
+      Other supported values are Framework40, Framework45, FrameworkCore10 and FrameworkUap10.
+
+--Platform|/Platform:<Platform type>
+      Target platform architecture to be used for test execution.
+      Valid values are x86, x64 and ARM.
+
+--Settings|/Settings:<Settings File>
+      Settings to use when running tests.
+
+RunSettings arguments:
+      Arguments to pass runsettings configurations through commandline. Arguments may be specified as name-value pair of the form [name]=[value] after "-- ". Note the space after --.
+      Use a space to separate multiple [name]=[value].
+      More info on RunSettings arguments support: https://aka.ms/vstest-runsettings-arguments
+
+-lt|--ListTests|/lt|/ListTests:<File Name>
+      Lists all discovered tests from the given test container.
+
+--Parallel|/Parallel
+      Specifies that the tests be executed in parallel. By default up
+      to all available cores on the machine may be used.
+      The number of cores to use may be configured using a settings file.
+
+--TestAdapterPath|/TestAdapterPath
+      This makes vstest.console.exe process use custom test adapters
+      from a given path (if any) in the test run.
+      Example  /TestAdapterPath:<pathToCustomAdapters>
+
+--Blame|/Blame:[CollectDump];[CollectAlways]=[Value];[DumpType]=[Value]
+      Runs the test in blame mode. This option is helpful in isolating the problematic test causing test host crash.
+      It creates an output file in the current directory as "Sequence.xml",
+      that captures the order of execution of test before the crash.
+      You may optionally choose to collect process dump for the test host.
+      When you choose to collect dump, by default, a mini dump will be collected on a crash.
+      You may also choose to override this default behaviour by some optional parameters:
+      CollectAlways - To collect dump on exit even if there is no crash (true/false)
+      DumpType - To specify dump type (mini/full).
+      Example: /Blame
+               /Blame:CollectDump
+               /Blame:CollectDump;CollectAlways=true;DumpType=full
+
+--Diag|/Diag:<Path to log file>
+      Enable logs for test platform.
+      Logs are written to the provided file.
+
+      Change the trace level for logs as shown below
+      Example: /Diag:<Path to log file>;tracelevel=<Defaults to "verbose">
+      Allowed values for tracelevel: off, error, warning, info and verbose.
+
+--logger|/logger:<Logger Uri/FriendlyName>
+      Specify a logger for test results. For example, to log results into a
+      Visual Studio Test Results File (TRX) use /logger:trx[;LogFileName=<Defaults to unique file name>]
+      Creates file in TestResults directory with given LogFileName.
+
+      Change the verbosity level in log messages for console logger as shown below
+      Example: /logger:console;verbosity=<Defaults to "minimal">
+      Allowed values for verbosity: quiet, minimal, normal and detailed.
+
+      Change the diagnostic level prefix for console logger as shown below
+      Example: /logger:console;prefix=<Defaults to "false">
+      More info on Console Logger here : https://aka.ms/console-logger
+
+--ResultsDirectory|/ResultsDirectory
+      Test results directory will be created in specified path if not exists.
+      Example  /ResultsDirectory:<pathToResultsDirectory>
+
+--ParentProcessId|/ParentProcessId:<ParentProcessId>
+      Process Id of the Parent Process responsible for launching current process.
+
+--Port|/Port:<Port>
+      The Port for socket connection and receiving the event messages.
+
+-?|--Help|/?|/Help
+      Display this usage message.
+
+--Collect|/Collect:<DataCollector FriendlyName>
+      Enables data collector for the test run. More info here : https://aka.ms/vstest-collect
+
+--InIsolation|/InIsolation
+      Runs the tests in an isolated process. This makes vstest.console.exe
+      process less likely to be stopped on an error in the tests, but tests
+      may run slower.
+
+@<file>
+      Read response file for more options.
+
+  To run tests:
+    >vstest.console.exe tests.dll
+  To run tests with additional settings such as  data collectors:
+    >vstest.console.exe  tests.dll /Settings:Local.RunSettings
+
+
+	
+	
+	
+	
+dotnet  dev-certs  --help
+
+Usage: dotnet dev-certs [options] [command]
+
+Options:
+  -h|--help  Show help information
+
+Commands:
+  https
+
+Use "dotnet dev-certs [command] --help" for more information about a command.
+
+	
+	
+	
+	
+	
+	
+	
+dotnet fsi  --help
+
+Microsoft (R) F# Interactive version 10.10.0.0 for F# 4.7
+Copyright (c) Microsoft Corporation. All Rights Reserved.
+
+Usage: dotnet fsi <options> [script.fsx [<arguments>]]
+
+
+                - INPUT FILES -
+--use:<file>                             Use the given file on startup as initial input
+--load:<file>                            #load the given file on startup
+--reference:<file>                       Reference an assembly (Short form: -r)
+--compilertool:<file>                    Reference an assembly or directory containing a design time tool (Short form: -t)
+--usesdkrefs[+|-]                        Use reference assemblies for .NET framework references when available (Enabled by default).
+-- ...                                   Treat remaining arguments as command line arguments, accessed using fsi.CommandLineArgs
+
+
+                - CODE GENERATION -
+--debug[+|-]                             Emit debug information (Short form: -g)
+--debug:{full|pdbonly|portable|embedded} Specify debugging type: full, portable, embedded, pdbonly. ('pdbonly' is the default if no debuggging type specified and enables attaching a debugger to a running program, 'portable' is a cross-platform format,
+                                         'embedded' is a cross-platform format embedded into the output file).
+--optimize[+|-]                          Enable optimizations (Short form: -O)
+--tailcalls[+|-]                         Enable or disable tailcalls
+--deterministic[+|-]                     Produce a deterministic assembly (including module version GUID and timestamp)
+--pathmap:<path=sourcePath;...>          Maps physical paths to source path names output by the compiler
+--crossoptimize[+|-]                     Enable or disable cross-module optimizations
+
+
+                - ERRORS AND WARNINGS -
+--warnaserror[+|-]                       Report all warnings as errors
+--warnaserror[+|-]:<warn;...>            Report specific warnings as errors
+--warn:<n>                               Set a warning level (0-5)
+--nowarn:<warn;...>                      Disable specific warning messages
+--warnon:<warn;...>                      Enable specific warnings that may be off by default
+--consolecolors[+|-]                     Output warning and error messages in color
+
+
+                - LANGUAGE -
+--langversion:{?|version|latest|preview} Display the allowed values for language version, specify language version such as 'latest' or 'preview'
+--checked[+|-]                           Generate overflow checks
+--define:<string>                        Define conditional compilation symbols (Short form: -d)
+--mlcompatibility                        Ignore ML compatibility warnings
+
+
+                - MISCELLANEOUS -
+--nologo                                 Suppress compiler copyright message
+--help                                   Display this usage message (Short form: -?)
+
+
+                - ADVANCED -
+--codepage:<n>                           Specify the codepage used to read source files
+--utf8output                             Output messages in UTF-8 encoding
+--preferreduilang:<string>               Specify the preferred output language culture name (e.g. es-ES, ja-JP)
+--fullpaths                              Output messages with fully qualified paths
+--lib:<dir;...>                          Specify a directory for the include path which is used to resolve source files and assemblies (Short form: -I)
+--simpleresolution                       Resolve assembly references using directory-based rules rather than MSBuild resolution
+--targetprofile:<string>                 Specify target framework profile of this assembly. Valid values are mscorlib, netcore or netstandard. Default - mscorlib
+--noframework                            Do not reference the default CLI assemblies by default
+--exec                                   Exit fsi after loading the files or running the .fsx script given on the command line
+--gui[+|-]                               Execute interactions on a Windows Forms event loop (on by default)
+--quiet                                  Suppress fsi writing to stdout
+--readline[+|-]                          Support TAB completion in console (on by default)
+--quotations-debug[+|-]                  Emit debug information in quotations
+--shadowcopyreferences[+|-]              Prevents references from being locked by the F# Interactive process
+
+
+
+
+
+	
+	
+	
+	
+dotnet user-secrets -h
+User Secrets Manager 3.1.7-servicing.20372.13
+
+Usage: dotnet user-secrets [options] [command]
+
+Options:
+  -?|-h|--help                        Show help information
+  --version                           Show version information
+  -v|--verbose                        Show verbose output
+  -p|--project <PROJECT>              Path to project. Defaults to searching the current directory.
+  -c|--configuration <CONFIGURATION>  The project configuration to use. Defaults to 'Debug'.
+  --id                                The user secret ID to use.
+
+Commands:
+  clear   Deletes all the application secrets
+  init    Set a user secrets ID to enable secret storage
+  list    Lists all the application secrets
+  remove  Removes the specified user secret
+  set     Sets the user secret to the specified value
+
+Use "dotnet user-secrets [command] --help" for more information about a command.
+
+
+
+
+
+
+
+dotnet watch  -h
+Microsoft DotNet File Watcher 3.1.7-servicing.20372.13
+
+Usage: dotnet watch [options] [[--] <arg>...]
+
+Options:
+  -?|-h|--help            Show help information
+  -p|--project <PROJECT>  The project to watch
+  -q|--quiet              Suppresses all output except warnings and errors
+  -v|--verbose            Show verbose output
+  --list                  Lists all discovered files without starting the watcher
+  --version               Show version information
+
+Environment variables:
+
+  DOTNET_USE_POLLING_FILE_WATCHER
+  When set to '1' or 'true', dotnet-watch will poll the file system for
+  changes. This is required for some file systems, such as network shares,
+  Docker mounted volumes, and other virtual file systems.
+
+  DOTNET_WATCH
+  dotnet-watch sets this variable to '1' on all child processes launched.
+
+  DOTNET_WATCH_ITERATION
+  dotnet-watch sets this variable to '1' and increments by one each time
+  a file is changed and the command is restarted.
+
+Remarks:
+  The special option '--' is used to delimit the end of the options and
+  the beginning of arguments that will be passed to the child dotnet process.
+  Its use is optional. When the special option '--' is not used,
+  dotnet-watch will use the first unrecognized argument as the beginning
+  of all arguments passed into the child dotnet process.
+
+  For example: dotnet watch -- --verbose run
+
+  Even though '--verbose' is an option dotnet-watch supports, the use of '--'
+  indicates that '--verbose' should be treated instead as an argument for
+  dotnet-run.
+
+Examples:
+  dotnet watch run
+  dotnet watch test
+
+
+  
+  
+  
+dotnet sql-cache  -h
+SQL Server Cache Command Line Tool 3.1.7
+
+Usage: dotnet sql-cache [options] [command]
+
+Options:
+  -?|-h|--help  Show help information
+  --version     Show version information
+  -v|--verbose  Show verbose output
+
+Commands:
+  create  Creates table and indexes in Microsoft SQL Server database to be used for distributed caching
+
+Use "dotnet sql-cache [command] --help" for more information about a command.
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
