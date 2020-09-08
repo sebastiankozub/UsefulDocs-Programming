@@ -16,7 +16,7 @@ _Test Text_
 Test Tekst
 ```	
 
-> Lorem ipsum: Wprowadź trzy odwrócone apostrofy. Wprowadź jeden podział wiersza (wciśnij shift + return). Wpisz tekst Wprowadź kolejny podział wiersza (wciśnij shift + return) Wprowadź kolejne trzy odwrócone apostrofy Wprowadź trzy odwrócone apostrofy. Wprowadź jeden podział wiersza (wciśnij shift + return) Wpisz tekst!!! Wprowadź kolejny podział wiersza (wciśnij shift + return). Wprowadź kolejne trzy odwrócone apostrofy Szablon krojów pisma LaTeX \(Tekst\) Testowe!!!
+> Quotations Sample. Lorem ipsum: Wprowadź trzy odwrócone apostrofy. Wprowadź jeden podział wiersza (wciśnij shift + return). Wpisz tekst Wprowadź kolejny podział wiersza (wciśnij shift + return) Wprowadź kolejne trzy odwrócone apostrofy Wprowadź trzy odwrócone apostrofy. Wprowadź jeden podział wiersza (wciśnij shift + return) Wpisz tekst!!! Wprowadź kolejny podział wiersza (wciśnij shift + return). Wprowadź kolejne trzy odwrócone apostrofy Szablon krojów pisma LaTeX \(Tekst\) Testowe!!!
 
 
 Latex-Compatible Support:
@@ -103,7 +103,7 @@ for (int i = 0 ; i < 10; i++)
 Quotation:
 ===========
 
-> Lorem ipsum ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum Lorem Ipsum. 
+> Quotations Sample. Lorem ipsum ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum Lorem Ipsum. 
 
 
 Colors:
